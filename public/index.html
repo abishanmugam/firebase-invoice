@@ -2,42 +2,230 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Web site created using create-snowpack-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <title>Finance D - Facturation</title>
   </head>
-  <body>
+
+  <body class="no-select">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <script type="module" src="/dist/index.js"></script>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <header id="signedOutHeader" class="flex-row flex-center" style="">
+      <a
+        href="https://finance-d.com"
+        id="login-page-logo"
+        class="footer-logo-container flex-row flex-center"
+      >
+        <img
+          class="fd-logo"
+          src="images/logo.png"
+          alt=""
+          width="48"
+          height="48"
+          style="width: 40px; height: 40px; margin: 15px"
+        />
+        <span
+          class="fd-logo-text text-no-wrap"
+          style="font-size: 40px; font-weight: bold; font-variant: small-caps"
+        >
+          Finance D</span
+        >
+      </a>
+    </header>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <header id="signedInHeader" style="display: none">
+      <a
+        href="https://finance-d.com"
+        id="header-logo"
+        class="header-left fd-logo-container flex-row flex-center"
+      >
+        <img
+          class="fd-logo"
+          src="images/logo.png"
+          alt=""
+          width="32"
+          height="32"
+          style="width: 32px; height: 32px; margin: 15px"
+        />
+        <span
+          class="fd-logo-text text-no-wrap"
+          style="font-size: 28px; font-weight: bold; font-variant: small-caps"
+        >
+          Finance D
+        </span>
+      </a>
+      <div class="header-center flex-row flex-center">
+        <div class="my-preferences">
+          <button id="my-preferences-btn">Mes préférences</button>
+        </div>
+        <div class="help">
+          <button id="help-btn">Aide</button>
+        </div>
+        <div class="my-invoices">
+          <button id="myInvoicesBtn">Mes factures</button>
+        </div>
+      </div>
+      <div class="header-right flex-row flex-center">
+        <div class="my-account flex-row flex-center">
+          <p>Connecté en tant que <span id="authUserEmail"></span></p>
+          <button id="signOutBtn">Se déconnecter</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-col flex-center">
+      <div
+        id="whenSignedOut"
+        class="flex-col flex-center"
+        style="display: none"
+      >
+        <h1>Facturation Simplifiée</h1>
+        <br />
+        <p>
+          Pour utiliser notre application gratuitement, connectez-vous avec
+          votre compte Google.
+        </p>
+        <div id="signInBtn" class="googleSignInButton_" style="height: 50px">
+          <div class="googleSignInButton_ContentWrapper">
+            <div class="googleSignInButton_Icon" style="padding: 15px">
+              <div style="width: 18px; height: 18px">
+                <svg
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18px"
+                  height="18px"
+                  viewBox="0 0 48 48"
+                  class="googleSignInButton_Svg"
+                >
+                  <g>
+                    <path
+                      fill="#EA4335"
+                      d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                    ></path>
+                    <path
+                      fill="#4285F4"
+                      d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                    ></path>
+                    <path
+                      fill="#FBBC05"
+                      d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                    ></path>
+                    <path
+                      fill="#34A853"
+                      d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                    ></path>
+                    <path fill="none" d="M0 0h48v48H0z"></path>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <span
+              class="googleSignInButton_Contents"
+              style="font-size: 16px; line-height: 48px"
+            >
+              <span id="googleSignInButton_Text">Se connecter avec Google</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div id="whenSignedIn" style="display: none">
+        <section id="invoice" class="flex-col">
+          <div class="invoice-top flex-row">
+            <div
+              class="invoice-client-name flex-col text-align-left input-container"
+            >
+              <label for="contactNameInput">Nom du client:</label>
+              <input
+                type="text"
+                id="contactNameInput"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Qui recevra cette facture?"
+              />
+            </div>
+            <div
+              class="invoice-number flex-col text-align-left input-container"
+            >
+              <label for="invoiceNumberInput">Numéro:</label>
+              <input
+                type="text"
+                id="invoiceNumberInput"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+            <div class="invoice-date flex-col text-align-left input-container">
+              <label for="invoiceDateInput">Date:</label>
+              <input
+                type="text"
+                id="invoiceDateInput"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+          </div>
+
+          <div class="invoice-transactions flex-row">Transactions:</div>
+
+          <div class="invoice-bottom flex-row">
+            <div class="invoice-sums">Sommes:</div>
+            <div class="invoice-payments">Paiements:</div>
+          </div>
+        </section>
+
+        <section id="appMenuBottom" class="flex-row flex-center">
+          <div class="reset-btn">
+            <button id="resetBtn">RESET</button>
+          </div>
+          <div class="save-btn">
+            <button id="saveBtn">ENREGISTRER</button>
+          </div>
+          <div class="delete-btn">
+            <button id="deleteBtn">DELETE</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="flex-row">
+      <a
+        href="https://finance-d.com"
+        id="footer-logo"
+        class="footer-logo-container flex-row flex-center"
+      >
+        <img
+          class="fd-logo"
+          src="images/logo.png"
+          alt=""
+          width="26"
+          height="26"
+          style="width: 26px; height: 26px"
+        />
+        <span
+          class="fd-logo-text text-no-wrap"
+          style="font-size: 20px; font-weight: bold; font-variant: small-caps"
+        >
+          Finance D</span
+        >
+      </a>
+      <pre
+        class="copyright flex-row flex-center"
+      >Copyright © <span id='copyright-year'></span> Finance D. Tous droits réservés.</pre>
+      <a href="https://github.com/alex-drocks/finance-d-invoicing-firebase">
+        <svg width="19" height="19" viewBox="0 0 14 14" aria-label="github">
+          <path
+            d="M7 .175c-3.872 0-7 3.128-7 7 0 3.084 2.013 5.71 4.79 6.65.35.066.482-.153.482-.328v-1.181c-1.947.415-2.363-.941-2.363-.941-.328-.81-.787-1.028-.787-1.028-.634-.438.044-.416.044-.416.7.044 1.071.722 1.071.722.635 1.072 1.641.766 2.035.59.066-.459.24-.765.437-.94-1.553-.175-3.193-.787-3.193-3.456 0-.766.262-1.378.721-1.881-.065-.175-.306-.897.066-1.86 0 0 .59-.197 1.925.722a6.754 6.754 0 0 1 1.75-.24c.59 0 1.203.087 1.75.24 1.335-.897 1.925-.722 1.925-.722.372.963.131 1.685.066 1.86.46.48.722 1.115.722 1.88 0 2.691-1.641 3.282-3.194 3.457.24.219.481.634.481 1.29v1.926c0 .197.131.415.481.328C11.988 12.884 14 10.259 14 7.175c0-3.872-3.128-7-7-7z"
+            fill="currentColor"
+            fill-rule="nonzero"
+          ></path>
+        </svg>
+      </a>
+    </footer>
   </body>
 </html>
